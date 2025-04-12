@@ -1,4 +1,4 @@
-import { TBook } from "../models/schema.js";
+import { TBook, TBorrowedBooks } from "../models/schema.js";
 import type { Request, Response } from "express";
 import * as bookService from "../service/bookService.js";
 
@@ -57,3 +57,20 @@ export const updateBookCopies = async (req: Request<TBook>, res: Response) => {
     return res.status(500).json({ error: "Failed to update book" });
   }
 };
+
+
+export const bookBorrowing = async (req:Request<TBorrowedBooks>, res:Response)=>{
+  try{
+    const { userId, bookId } = req.body;
+
+    if (!userId || !bookId) {
+      return res.status(400).json({ error: "userId and bookId required" });
+    }
+
+    const result = await bookService.borrowedBooks(userId, bookId);
+    return res.status(200).json(result);
+  }catch(error){
+    console.error("BorrowBook Error:", (error as Error).message);
+    return res.status(500).json({ error: "Failed to borrow book" });
+  }
+}

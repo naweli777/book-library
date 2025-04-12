@@ -42,7 +42,7 @@ export const BorrowedBooks = pgTable("borrowed_books", {
     .references(() => Books.id)
     .notNull(),
   borrowedAt: timestamp("borrowed_at").defaultNow().notNull(),
-  returnedAt: timestamp("returned_at").notNull(),
+  returnedAt: timestamp("returned_at", { mode: "date" }).defaultNow().notNull(),
 });
 
 export type TBook = typeof Books.$inferInsert;
