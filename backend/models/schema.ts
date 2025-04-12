@@ -26,7 +26,7 @@ export const User = pgTable("user", {
 
 export const Books = pgTable("books", {
   id: serial("id").primaryKey(),
-  title: text("title"),
+  title: text("title").unique(),
   author: text("author"),
   totalCopies: integer("total_copies").notNull(),
   availableCopies: integer("available_copies").notNull(),
@@ -45,5 +45,6 @@ export const BorrowedBooks = pgTable("borrowed_books", {
   returnedAt: timestamp("returned_at").notNull(),
 });
 
-
 export type TBook = typeof Books.$inferInsert;
+export type TBorrowedBooks = typeof BorrowedBooks.$inferInsert;
+export type TUser = typeof User.$inferInsert;

@@ -24,15 +24,36 @@ export const addBook = async (req: Request<{}, {}, TBook>, res: Response) => {
   }
 };
 
-
-export const getAllBooks = async (req: Request<{}, {}, TBook>, res: Response)=>{
-  try{
-
-   const books = await bookService.getBooks();
-   return res.status(200).json({books, message: "Books fetched successfully"})
-
-  }catch(error){
+export const getAllBooks = async (
+  req: Request<{}, {}, TBook>,
+  res: Response
+) => {
+  try {
+    const books = await bookService.getBooks();
+    return res
+      .status(200)
+      .json({ books, message: "Books fetched successfully" });
+  } catch (error) {
     console.log(error);
-    return res.status(400).json({error:"Server Error"})
+    return res.status(400).json({ error: "Server Error" });
   }
-}
+};
+
+export const updateBookCopies = async (req: Request<TBook>, res: Response) => {
+  try {
+    const bookId = req.params?.id;
+    const {totalCopies} = req.body;
+
+    if (!bookId || !totalCopies) {
+      return res
+        .status(400)
+        .json({ error: "Book ID and totalCopies required" });
+    }
+
+    await bookService.updateBookCopies(bookId, totalCopies);
+    return res.status(200).json({ message: "Book Updated Successfully" });
+  } catch (error) {
+    console.error("UpdateBook Error:", (error as Error).message);
+    return res.status(500).json({ error: "Failed to update book" });
+  }
+};
