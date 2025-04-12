@@ -23,3 +23,16 @@ export const addBook = async (req: Request<{}, {}, TBook>, res: Response) => {
     return res.status(400).json({ error: "Server Error" });
   }
 };
+
+
+export const getAllBooks = async (req: Request<{}, {}, TBook>, res: Response)=>{
+  try{
+
+   const books = await bookService.getBooks();
+   return res.status(200).json({books, message: "Books fetched successfully"})
+
+  }catch(error){
+    console.log(error);
+    return res.status(400).json({error:"Server Error"})
+  }
+}
