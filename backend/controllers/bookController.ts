@@ -1,0 +1,25 @@
+import { TBook } from "../models/schema.js";
+import type { Request, Response } from "express";
+import * as bookService from "../service/bookService.js";
+
+export const addBook = async (req: Request<{}, {}, TBook>, res: Response) => {
+  try {
+    const { author, title, totalCopies } = req.body;
+
+    if (!author || !title || !totalCopies) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const newBook = {
+      author,
+      title,
+      totalCopies,
+      availableCopies: totalCopies,
+    };
+    await bookService.addBook(newBook);
+    return res.status(200).json({ message: "Book Added Successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error: "Server Error" });
+  }
+};

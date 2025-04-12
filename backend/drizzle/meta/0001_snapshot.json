@@ -1,0 +1,27 @@
+{
+  "id": "2f53014e-fa03-4995-a061-4ec2d61e6efd",
+  "prevId": "897b86c1-06e1-40af-b30b-3468bbef6ffb",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {},
+  "enums": {
+    "public.user_role": {
+      "name": "user_role",
+      "schema": "public",
+      "values": [
+        "admin",
+        "user"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
